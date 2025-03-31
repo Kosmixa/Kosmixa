@@ -1,0 +1,31 @@
+Kosmixa/
+├── README.md
+├── CMakeLists.txt
+├── kernel/
+│   ├── CMakeLists.txt
+│   ├── boot/
+│   │   ├── boot.asm
+│   │   ├── kernel.c
+│   ├── drivers/
+│   │   ├── keyboard.c
+│   │   ├── screen.c
+│   ├── include/
+│   │   ├── kernel.h
+│   │   ├── types.h
+│   ├── kernel.c
+│   ├── scheduler.c
+├── system/
+│   ├── CMakeLists.txt
+│   ├── init/
+│   │   ├── init.c
+│   ├── libs/
+│   │   ├── string.c
+│   │   ├── math.c
+│   ├── programs/
+│   │   ├── shell.c
+│   │   ├── utils.c
+├── tools/
+│   ├── mkfs.c
+│   ├── bootloader.asm
+├── build/
+│
