@@ -1,0 +1,47 @@
+name: Kosmixa Kernel Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Kosmixa Kernel
+    strategy:
+      matrix:
+        edition: [gaming, dev, workstation, server]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential \
+            libncurses-dev \
+            bison \
+            flex \
+            libssl-dev \
+            libelf-dev \
+            bc \
+            cpio \
+            wget \
+            xz-utils
+
+      - name: Set Kernel Config for ${{ matrix.edition }} edition
+        run: |
+          cp configs/kosmixa-${{ matrix.edition }}.config .config
+
+      - name: Build Kosmixa Kernel (${{ matrix.edition }})
+        run: |
+          make olddefconfig
+          make -j$(nproc)
+
+      - name: Upload Kernel Artifact (${{ matrix.edition }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: kosmixa-kernel-${{ matrix.edition }}
+          path: arch/x86/boot/bzImage
